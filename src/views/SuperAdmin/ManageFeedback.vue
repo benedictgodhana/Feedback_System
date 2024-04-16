@@ -125,7 +125,7 @@
           
           <br>
           <!-- Reset button -->
-          <v-btn @click="resetDateFilter" color="red" width="100%" style="max-width: 1350px;margin-left: 20px;"><v-icon left>mdi-refresh</v-icon>Reset</v-btn>
+          <v-btn @click="resetDateFilter" color="#EC7D30" width="100%" style="max-width: 1350px;margin-left: 20px;"><v-icon left>mdi-refresh</v-icon>Reset</v-btn>
           <br>
           <br>
           <v-btn color="green" @click="exportFeedback" width="100%" style="max-width: 1350px;margin-left: 20px;">
@@ -146,7 +146,11 @@
     item-key="id"
     class="custom-data-table"
     style="width: 100%;"
+
+    
+
   >
+  
         <template v-slot:item.action="{ item }">
           <v-btn color="transparent" elevation="0" @click="viewFeedback(item)" style="text-transform: lowercase;"><v-icon color="#385cad">mdi-eye</v-icon></v-btn>
         </template>
@@ -155,6 +159,10 @@
   </v-card>
 
 </v-container>
+<v-footer style="background-color: #385cad;">
+      <!-- Your footer content here -->
+      <p style="color:white;font-size: 15px;text-transform: none  ;">&copy; 2024 @iLabAfrica, Strathmore University. All rights reserved.</p>
+    </v-footer>
 </template>
 
 <script>
@@ -182,6 +190,7 @@ export default {
       statusOptions: ['Pending', 'Resolved', 'In Progress', 'Closed'], // Status options for the select dropdown
       tableHeaders: [
         { title: 'Feedback Category', value: 'category_id' },
+        { title: 'Category Specification(Other)', value: 'other_category' },
         { title: 'Subject', value: 'subject' },
         { title: 'Name', value: 'name' },
         { title: 'Email', value: 'email' },

@@ -15,6 +15,7 @@ import SuperAdminProfile from '../views/SuperAdmin/SuperAdminProfile.vue'
 
 import ForgotPassword from '../views/ForgotPassword.vue'
 import PasswordReset from '../views/PasswordReset.vue';
+import FeedbackTable from '@/views/Admin/FeedbackTable.vue';
 
 
 
@@ -27,6 +28,13 @@ import PasswordReset from '../views/PasswordReset.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
+    {
+      path: '/feedback-table/:category',
+      name: 'FeedbackTable',
+      component: FeedbackTable,
+      props: true, // Pass route params as props to the component
+    },
     {
       path: '/',
       name: 'home',

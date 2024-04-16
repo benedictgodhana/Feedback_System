@@ -81,9 +81,9 @@
         <v-card style="margin:0px;border-radius: 10px;" variant="outlined" elevation="3" width="100%">
           <v-img src="/feedback_11293675.png" style="margin-top: 10px;" height="50" contain></v-img>
 
-          <v-card-title> {{ category }}</v-card-title>
+          <v-card-title style="font-size: 17px;"> {{ category }}</v-card-title>
           <v-card-text>
-            <div><strong style="font-size: 15px;">Number of Feedback:{{ count }}</strong> </div>
+            <strong>Number of Feedback:{{ count }}</strong>
           </v-card-text>
           <v-card-actions>
             <v-btn color="white" text to="/admin/manage-feedback" style="background:#385cad;width: 100%;text-transform:capitalize;">View Feedback</v-btn>
@@ -124,11 +124,9 @@ export default {
     SuperAdminNavbar,
     HighchartsVue,
     UserCountCard,
-      EmployeeCountCard,
-      CustomerCountCard,
-      ServiceCountCard,
-      PaymentCountCard,
-      UserCountCard,
+    CustomerCountCard,
+    ServiceCountCard,
+    PaymentCountCard,
   },
   data() {
     return {
@@ -168,7 +166,7 @@ export default {
         },
         yAxis: {
           title: {
-            text: 'Number of Feedbacks'
+            text: 'Number of Feedback'
           }
         },
         series: [{

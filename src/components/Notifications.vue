@@ -1,5 +1,8 @@
 <template>
     <v-card class="notifications-card">
+      <v-toolbar>
+        <v-card-title style="margin-left: 100px;">Notifications</v-card-title>
+      </v-toolbar>
       <!-- Notification list -->
       <v-list>
         <v-list-item v-for="notification in visibleNotifications" :key="notification.id" class="notification-item">
@@ -10,8 +13,10 @@
         </v-list-item>
       </v-list>
       <v-btn v-if="showMoreButton" @click="showMoreNotifications" class="show-more-button">
-        Show More
-      </v-btn>
+  <v-icon left style="padding: 15px;" color="white">mdi-arrow-down</v-icon>
+  Show More
+</v-btn>
+
     </v-card>
   </template>
   

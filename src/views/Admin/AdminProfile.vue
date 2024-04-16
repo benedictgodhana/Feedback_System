@@ -25,9 +25,9 @@
           <v-card-title class="text-center" style="background-color:#385cad;color:white">Change Password</v-card-title>
           <v-card-text>
             <!-- Form fields for changing password -->
-            <v-text-field v-model="oldPassword" label="Old Password" type="password" outlined></v-text-field>
-            <v-text-field v-model="newPassword" label="New Password" type="password" outlined></v-text-field>
-            <v-text-field v-model="confirmPassword" label="Confirm New Password" type="password" outlined></v-text-field>
+            <v-text-field v-model="oldPassword" label="Old Password" type="password" variant="outlined"></v-text-field>
+            <v-text-field v-model="newPassword" label="New Password" type="password" variant="outlined"></v-text-field>
+            <v-text-field v-model="confirmPassword" label="Confirm New Password" type="password" variant="outlined"></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-btn color="white" @click="changePassword" style="background: green;margin-left: 20px;text-transform: capitalize;">Submit</v-btn>

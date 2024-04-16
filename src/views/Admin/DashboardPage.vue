@@ -53,12 +53,12 @@
      <v-row>
       <v-col cols="12" md="6">
         <v-card elevation="0">
-          <highcharts :options="chartOptions"></highcharts>
+          <highcharts :options="chartOptions" style="text-transform: none;" ></highcharts>
         </v-card>
       </v-col>
       <v-col cols="12" md="6">
         <v-card elevation="0">
-          <highcharts :options="graphOptions"></highcharts>
+          <highcharts :options="graphOptions" style="text-transform: none;"></highcharts>
         </v-card>
       </v-col>
     </v-row>
@@ -66,20 +66,23 @@
 
     <!-- Feedback counts cards -->
     <v-row>
-      <v-col v-for="(count, category) in feedbackCounts" :key="category" cols="12" md="6" lg="">
-        <v-card style="margin:0px;border-radius: 10px;" variant="outlined" elevation="3" width="100%">
-          <v-img src="/feedback_11293675.png" style="margin-top: 10px;" height="50" contain></v-img>
+  <v-col v-for="(count, category) in feedbackCounts" :key="category" cols="12" md="6" lg="">
+    <v-card style="margin:0px;border-radius: 10px;" variant="outlined" elevation="3" width="100%">
+      <v-img src="/feedback_11293675.png" style="margin-top: 20px;" height="50" contain></v-img>
 
-          <v-card-title> {{ category }}</v-card-title>
-          <v-card-text>
-            <div><strong style="font-size: 15px;">Number of Feedback:{{ count }}</strong> </div>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="white" text to="/admin/manage-feedback" style="background:#385cad;width: 100%;text-transform:capitalize;">View Feedback</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+      <v-card-title style="font-size: 17px;"> {{ category }}</v-card-title>
+      <v-card-text>
+        <strong>Number of Feedback:{{ count }}</strong>
+      </v-card-text>
+      <v-card-actions>
+        <router-link :to="{ name: 'FeedbackTable', params: { category: category } }" style="width: 100%">
+          <v-btn color="white" text style="background:#385cad;text-transform:capitalize; width: 100%"><v-icon>mdi-eye</v-icon>View Feedback</v-btn>
+        </router-link>
+      </v-card-actions>
+    </v-card>
+  </v-col>
+</v-row>
+
     <br>
     <br>
 
@@ -98,14 +101,13 @@
 import AdminSidebar from '@/components/AdminSidebar.vue';
 import AdminNavbar from '@/components/AdminNavbar.vue';
 import axiosInstance from '@/service/api';
-import Highcharts from 'highcharts';
 import HighchartsVue from 'highcharts-vue';
 
 export default {
   components: {
     AdminSidebar,
     AdminNavbar,
-    HighchartsVue
+    HighchartsVue,
   },
   data() {
     return {
@@ -140,7 +142,7 @@ export default {
         },
         yAxis: {
           title: {
-            text: 'Number of Feedbacks'
+            text: 'Number of Feedback'
           }
         },
         series: [{

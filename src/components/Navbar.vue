@@ -1,45 +1,33 @@
 <template>
   
-  <v-app-bar app height="90" style="background:#385cad;color:white; display: flex; align-items: center;" elevation="0">
+  <v-app-bar app height="100" style="background:#385cad;color:white; display: flex; align-items: center;" elevation="0">
 
-     
-    <v-btn style="font-weight: 500;" icon @click="sidebar = !sidebar" class="hidden-md-and-up">
-         <v-icon size="16">mdi-menu</v-icon>
-       </v-btn>
-       
-    <v-header>
+<!-- Menu button for small screens -->
+<v-btn class="menu-btn hidden-md-and-up" icon @click="sidebar = !sidebar">
+  <v-icon size="16">mdi-menu</v-icon>
+</v-btn>
 
-      
-      <img src="/iLab white Logo-01.png" alt="Logo" height="190" style="margin-top: 20px;margin-left: 20px;">
-    </v-header>
+<!-- Logo -->
+<v-header>
+  <img src="/iLab white Logo-01.png" alt="Logo" height="210" style="margin-left: 20px;">
+</v-header>
 
-    
-       <!-- Logo with separator -->
+<!-- Spacer to push buttons to the right -->
+<v-spacer></v-spacer>
 
-       <v-spacer></v-spacer>
+<!-- Navigation buttons for larger screens -->
+<v-btn class="nav-btn hidden-sm-and-down" text to="/" style="text-transform: capitalize;">
+  <v-icon size="16" class="btn-icon">mdi-home</v-icon>Home
+</v-btn>
+<v-btn class="nav-btn hidden-sm-and-down" text to="/feedback" style="text-transform: capitalize;">
+  <v-icon size="13" class="btn-icon">mdi-comment-quote</v-icon>Give feedback
+</v-btn>
+<v-btn class="nav-btn hidden-sm-and-down" @click="showSignInModal" style="text-transform: capitalize;">
+  <v-icon size="16" class="btn-icon">mdi-account</v-icon>Login
+</v-btn>
 
-       
-       <!-- Navigation buttons for larger screens -->
-     
-       <v-btn style="margin-left:-600px; font-weight: 500;font-family: 'poppins';text-transform:capitalize;"  text to="/" class="hidden-sm-and-down">
-         <v-icon size="16">mdi-home</v-icon>Home
-       </v-btn>
-       <v-btn style="margin:2px;font-weight: 500;font-family: 'poppins';text-transform:capitalize;"  text to="/feedback" class="hidden-sm-and-down">
-         <v-icon size="16">mdi-comment-quote</v-icon> Give feedback
-       </v-btn>
-       
-       
-      
+</v-app-bar>
 
-       
-       <!-- Button to open the sidebar on small screens -->
-       
-
-       <v-btn style="font-weight: 500;font-family: 'poppins';text-transform:capitalize;" @click="showSignInModal" class="hidden-sm-and-down">
-         <v-icon size="16">mdi-account</v-icon>Login
-       </v-btn>
-         
-   </v-app-bar>
    <!-- Sidebar for small screens -->
    <v-navigation-drawer v-model="sidebar" app class="sidebar-drawer">
  <v-list nav>
@@ -75,41 +63,78 @@
 
 
 
- <!-- Sign In Modal -->
- <v-dialog v-model="signInModal" max-width="600px">
-  <v-card style="border-radius:2px" elevation="4">
-    <v-card-title class="text-center" style="font-weight: 800;background-color: #385cad;color:white">Login In</v-card-title>
+ <v-dialog v-model="signInModal" max-width="700px" >
+    <v-card style="border-radius:3px" elevation="4">
+      <v-toolbar color="white">
+        <v-spacer></v-spacer>
+        <v-btn
+        color="gray"
+        text
+        icon
+        @click="signInModal = false"
+        style="color:black">
+        <v-icon color="grey-lighten">
+                mdi-close
+              </v-icon>
+        <v-tooltip
+        activator="parent"
+        location="bottom"
+      >Close 
+    </v-tooltip>
+    </v-btn>
+      </v-toolbar>
+      <v-card-text>
 
+      <img src="/LOGO_2.png"       class="hidden-sm-and-down"
+ alt="Logo" height="200" style="margin-top:0px; margin-left:70px" />
+        <v-form @submit.prevent="signIn">
+  <v-text-field
+    v-model="signInData.email"
+    label="Email" 
+    hint="For example, username@example.com"
+    required
+    prepend-inner-icon="mdi-email"
+    variant="outlined"
+  ></v-text-field>
+  <v-text-field
+    v-model="signInData.password"
+    label="Password"
+    type="password"
+    required
+    prepend-inner-icon="mdi-lock"
+    variant="outlined"
+  ></v-text-field>
+  <!-- Login button with loading state -->
+  <v-btn
+    :loading="loading"
+    type="submit"
+    style="
+      border-radius: 2px;
+      width: 100%;
+      text-transform: lowercase;
+      background: #385cad;
+      color: white;
+    "
+  >
+    <v-icon left style="margin: 3px">mdi-login</v-icon>
+    Login
+  </v-btn>
+  <div class="text-center mt-2">
+    <a href="/forgot_password"  style="text-decoration: none;color:#385cad" @click="forgotPassword">Forgot Password?</a>
+  </div>
+</v-form>
 
-    <v-card-text>
+      </v-card-text>
 
-<v-alert v-model="showErrorAlert" type="error" dismissible>
-  Authentication failed. Please check your email and password.
-</v-alert>
-<br>
-
-      <v-form @submit.prevent="signIn">
-        <v-text-field v-model="signInData.email" label="Email" required variant="outlined"></v-text-field>
-        <v-text-field v-model="signInData.password" label="Password" type="password" required variant="outlined"></v-text-field>
-        <!-- Login button with loading state -->
-        <v-btn :loading="loading" type="submit"  style="border-radius:2px; width: 100%; text-transform: lowercase;background: #385cad;color:white">
-          <v-icon left style="margin: 3px;">mdi-login</v-icon>
-          Login
-        </v-btn>
-        <div class="text-center mt-2">
-          <a href="/forgot_password" @click="forgotPassword">Forgot Password?</a>
-        </div>
-      </v-form>
-   
-    </v-card-text>
-  </v-card>
-</v-dialog>
-
-
+      <v-card-actions class="justify-center">
+      <span>&copy; {{ new Date().getFullYear() }} All Rights Reserved</span>
+    </v-card-actions>
+    </v-card>
+  </v-dialog>
 
  <!-- Sign Up Modal -->
  <v-dialog v-model="signUpModal" max-width="700px">
-  <v-card style="border-radius: 10px;" elevation="4" height="100%">
+  <v-card style="border-radius: 20px;" elevation="4" height="100%">
     <v-card-title class="text-center" style="color:black;font-weight: 800;">Sign Up</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="signUp">
@@ -320,6 +345,37 @@ watch: {
 </script>
 
 <style>
+
+
+.menu-btn {
+    margin-left: 20px; /* Add margin to the left for menu button */
+  }
+
+  .nav-btn {
+    margin-left: 10px; /* Add margin between navigation buttons */
+    font-weight: 500; /* Button text weight */
+    text-transform: capitalize; /* Capitalize button text */
+    font-family: 'Poppins', sans-serif; /* Use custom font */
+    color: white; /* Button text color */
+  }
+
+  .nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Add hover effect */
+  }
+
+  .btn-icon {
+    margin-right: 5px; /* Add margin to separate icon from text */
+  }
+
+  /* Logo */
+  img {
+    margin-top: 20px; /* Adjust logo margin */
+  }
+
+  /* Spacer */
+  .spacer {
+    flex-grow: 1; /* Allow spacer to grow and occupy remaining space */
+  }
 .sidebar-button {
    text-align: left;
    width: 97%;

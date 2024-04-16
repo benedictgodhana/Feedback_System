@@ -19,6 +19,11 @@ function logout() {
     <v-main>
       <!-- Use v-if to conditionally render Navbar -->
       <RouterView />
+
+      
     </v-main>
+
+    
+    
   </v-app>
 </template>

@@ -6,8 +6,8 @@
       
       <v-card variant="outlined" elevation="0" style="border-radius: 5px;">
         <v-sheet class="about-section" variant="outlined">
+         <v-card-title class="text-center" style="background-color: #385cad;color:white">My feedback</v-card-title>
          
-          <v-card-title class="text-center" style="background-color:#385cad;margin-top: -20px;color:white ;">My feedback</v-card-title>
           <br>
 
 
@@ -25,14 +25,36 @@
               item-value="id"
               label="Feedback Category"
               variant="outlined"
+              prepend-inner-icon="mdi-arrow-up-down"
               style="text-transform: capitalize;"
             ></v-select>
+            <v-text-field
+      v-if="showOtherCategoryField"
+      v-model="otherCategory"
+      label="Specify Other Category"
+      variant="outlined"
+      style="text-transform: capitalize;"
+    ></v-text-field>
+
+
+            <v-select
+          v-model="selectedSubcategory"
+          :items="subcategories"
+          item-title="name"
+          item-value="id"
+          label="Subcategory"
+          variant="outlined"
+          prepend-inner-icon="mdi-arrow-up-down"
+          style="text-transform: capitalize;"
+        ></v-select>
+
             
             <v-text-field
               v-model="subject"
               label="Subject"
               required
               variant="outlined"
+              prepend-inner-icon="mdi-text-long"
               style="text-transform: capitalize;"
 
             ></v-text-field>
@@ -42,6 +64,7 @@
               label="Name (optional)"
               required
               variant="outlined"
+              prepend-inner-icon="mdi-account"
               style="text-transform: capitalize;"
 
             ></v-text-field>
@@ -51,6 +74,7 @@
           type="email"
           required
           variant="outlined"
+          prepend-inner-icon="mdi-email"
           :error-messages="emailErrors"
           style="text-transform: capitalize;"
 
@@ -66,10 +90,13 @@
               required
               variant="outlined"
               style="text-transform: capitalize;"
+              prepend-inner-icon="mdi-text"
 
             ></v-textarea>
 
             <div id="recaptchaContainer"></div>
+
+          
             
             <v-btn
               type="submit"
@@ -77,31 +104,65 @@
               class="mx-auto"
               style="text-transform:capitalize;width:100%;"
               :loading="loading"
+              
             >
-              Submit
+            <v-icon>mdi-send</v-icon>
+                 Submit
             </v-btn>
-
+            <p class="text-center mt-2" style="font-size: 16px;text-transform: none;">
+            Your feedback will be treated with utmost urgency
+          </p>
           
           </v-form>
           
-          <p class="text-center mt-2" style="font-size: 16px;text-transform: none;">
-            By submitting this feedback, you acknowledge that your submissions are taken seriously!
-          </p>
+         
         </v-sheet>
       </v-card>
     </v-container>
 
 
-    <v-footer style="background-color: #385cad;" height="120">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <p style="color: white; text-align: center; margin: 0;text-transform: none;">&copy; 2024 @iLabAfrica, Strathmore University. All rights reserved.</p>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-footer> 
+  
   </div>
+
+  <v-footer style="background-color: #385cad;" >
+  <v-container>
+    <v-row align="center">
+      <!-- Logo -->
+      <v-col cols="12" md="4" class="text-center">
+        <img src="/iLab white Logo-01.png" alt="iLabAfrica Logo" style="max-width: 300px;">
+      </v-col>
+      
+      <!-- Contact Column -->
+      <v-col cols="12" md="4">
+        <h3 style="color: white; text-transform: uppercase;">Contact</h3>
+        <p style="color: white;font-size: 16px;text-transform: none;">Address: Strathmore University Student Centre, Keri Road</p>
+        <p style="color: white;font-size: 16px;text-transform: none;">Phone: +254 703 034 616</p>
+        <p style="color: white;font-size: 16px;text-transform: none;">Email: ilabafrica@strathmore.edu</p>
+        <p style="color: white;font-size: 16px;text-transform: none;">Mon-Fri: 8:00AM - 5:00PM</p>
+
+      </v-col>
+      
+      <!-- Quick Links Column -->
+      <v-col cols="12" md="4">
+        <h3 style="color: white; text-transform: uppercase;">Quick Links</h3>
+        <ul style="list-style-type: none; padding: 0;">
+          <li><a href="/" style="color: white; text-decoration: none;text-transform: none;">Home</a></li>
+          <li><a href="/feedback" style="color: white; text-decoration: none;text-transform: none;">Give Feedback</a></li>
+          <!-- Add more quick links as needed -->
+        </ul>
+      </v-col>
+    </v-row>
+    
+    <!-- Copyright Text -->
+    <v-row>
+      <v-col cols="12">
+        <p style="color: white; text-align: center; margin: 0; text-transform: none; font-size: 17px;">
+          &copy; 2024 @iLabAfrica, Strathmore University. All rights reserved.
+        </p>
+      </v-col>
+    </v-row>
+  </v-container>
+</v-footer>
 
   
 </template>
@@ -116,6 +177,9 @@ export default {
   },
   data() {
     return {
+      selectedSubcategory: '',
+      subcategories: [],
+      otherCategory: '',
       recaptchaWidget: null,
       rules: {
       email: [
@@ -137,6 +201,15 @@ export default {
   },
 
   computed: {
+    showSubcategoryField() {
+    return this.subcategories.length > 0;
+  },
+    showOtherCategoryField() {
+    // Find the selected category object from feedbackCategories array
+    const selectedCategory = this.feedbackCategories.find(category => category.id === this.selectedCategory);
+    // Check if the selected category's name is "Other"
+    return selectedCategory && selectedCategory.name === 'Other';
+  },
   emailErrors() {
     const errors = [];
     if (!this.rules.email[0](this.email)) {
@@ -153,8 +226,25 @@ export default {
   
     this.fetchFeedbackCategories();
     this.loadRecaptchaScript();
+    this.fetchSubcategories(); // Fetch subcategories when the component is mounted
   },
   methods: {
+    async fetchSubcategories() {
+  try {
+    if (!this.selectedCategory) {
+      console.error('Selected category is empty');
+      return;
+    }
+
+    const response = await axiosInstance.get(`/feedback-categories/${this.selectedCategory}/feedback_sub_categories`);
+    this.subcategories = response.data;
+    console.log('Subcategories:', this.subcategories); // Add this line to check the fetched subcategories
+  } catch (error) {
+    console.error('Error fetching subcategories:', error);
+  }
+},
+
+
     loadRecaptchaScript() {
   const script = document.createElement('script');
   script.src = 'https://www.google.com/recaptcha/enterprise.js?render=6Lc3Da8pAAAAAKBHdGzsitOwjjUPh6ttkrkGbkTw';
@@ -179,33 +269,49 @@ initializeRecaptcha() {
     });
 },
 
-    async fetchFeedbackCategories() {
-      try {
-        const response = await axiosInstance.get('/feedback-categories');
-        this.feedbackCategories = response.data;
-      } catch (error) {
-        console.error('Error fetching feedback categories:', error);
-      }
-    },
-    async submitFeedback() {
+async fetchFeedbackCategories() {
+  try {
+    const response = await axiosInstance.get('/feedback-categories');
+    this.feedbackCategories = response.data;
+    console.log('Feedback categories:', this.feedbackCategories); // Add this line
+  } catch (error) {
+    console.error('Error fetching feedback categories:', error);
+  }
+},
+
+async submitFeedback() {
   this.loading = true;
   try {
+    // Check if subcategory is selected
+    if (!this.selectedSubcategory) {
+      console.error('Subcategory is required');
+      return; // Exit function if subcategory is not selected
+    }
+
+    // Fetch the subcategory_id associated with the selected category
+    const subcategoryId = this.selectedSubcategory;
+
     const response = await axiosInstance.post('/feedback', {
       category_id: this.selectedCategory,
+      subcategory_id: subcategoryId, // Include the subcategory_id
       subject: this.subject,
       name: this.name,
       email: this.email,
-      feedback: this.feedback
+      feedback: this.feedback,
+      other_category: this.otherCategory, // Include otherCategory if it's available
     });
     console.log('Response from server:', response); // Check the response from the server
     this.successMessage = response.data.message;
     console.log('Success message:', this.successMessage); // Check the success message
     // Optionally, reset form fields after successful submission
     this.selectedCategory = '';
+    this.selectedSubcategory = ''; // Reset selected subcategory
     this.subject = '';
     this.name = '';
     this.email = '';
     this.feedback = '';
+    this.otherCategory = ''; // Reset otherCategory field
+    
     // Set a timeout to clear the success message after 4 seconds
     setTimeout(() => {
       this.successMessage = '';
@@ -217,8 +323,18 @@ initializeRecaptcha() {
   }
 }
 
-
   },
+
+  watch: {
+  selectedCategory(newValue, oldValue) {
+    if (newValue !== oldValue) {
+      this.fetchSubcategories(); // Fetch subcategories when the selected category changes
+    }
+  }
+}
+
+
+  
 };
 </script>
 

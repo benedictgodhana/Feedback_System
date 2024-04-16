@@ -3,7 +3,7 @@
       <Navbar></Navbar>
   
       <v-container class="fill-height d-flex align-center justify-center">
-        <v-card width="100%" variant="outlined" style="max-width: 800px;">
+        <v-card width="100%" variant="outlined" style="max-width: 800px;margin-top: 50px;">
           <v-alert v-model="alert" :type="alertType" transition="scale-transition" dismissible>
             {{ alertMessage }}
           </v-alert>
@@ -18,7 +18,10 @@
           </v-card-text>
         </v-card>
       </v-container>
+      
     </div>
+
+    
   </template>
   
   <script>
