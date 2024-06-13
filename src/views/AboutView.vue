@@ -4,7 +4,7 @@
 
     <v-container>
 
-      <v-card  elevation="3" style="border-radius: 5px;" width="100%">
+      <v-card elevation="3" style="border-radius: 5px;" width="100%">
         <v-sheet class="about-section" variant="outlined">
           <v-card-title class="text-center" style="background-color:#02338D; color: white;">My Feedback</v-card-title>
           <br>
@@ -15,7 +15,7 @@
           <br>
 
           <v-form @submit.prevent="submitFeedback" class="px-3 py-2">
-            
+
             <v-select
               v-model="selectedCategory"
               :items="feedbackCategories"
@@ -23,10 +23,11 @@
               item-value="id"
               label="Feedback Category*"
               required
-              :error-messages="categoryErrors"
               variant="underlined"
               prepend-inner-icon="mdi-arrow-up-down"
               dense
+              :rules="[v => !!v || 'Category is required']"
+
               style="text-transform: capitalize;"
             ></v-select>
 
@@ -36,6 +37,7 @@
               label="Specify Other Category"
               variant="underlined"
               dense
+
               style="text-transform: capitalize;"
             ></v-text-field>
 
@@ -46,10 +48,10 @@
               item-value="id"
               label="Subcategory*"
               required
-              :error-messages="subcategoryErrors"
               variant="underlined"
               prepend-inner-icon="mdi-arrow-up-down"
               dense
+              :rules="[v => !!v || 'Subcategory is required']"
               style="text-transform: capitalize;"
             ></v-select>
 
@@ -58,12 +60,11 @@
               label="Subject*"
               required
               :rules="[v => !!v || 'Subject is required']"
-              :error-messages="subjectErrors"
               variant="underlined"
               prepend-inner-icon="mdi-text-long"
               dense
             ></v-text-field>
-            
+
             <v-text-field
               v-model="name"
               label="Name (optional)"
@@ -80,7 +81,6 @@
               style="text-transform: capitalize;"
               variant="underlined"
               prepend-inner-icon="mdi-email"
-              :error-messages="emailErrors"
               dense
             ></v-text-field>
 
@@ -89,7 +89,6 @@
               label="Feedback*"
               required
               :rules="[v => !!v || 'Feedback is required']"
-              :error-messages="feedbackErrors"
               variant="underlined"
               prepend-inner-icon="mdi-text"
               dense
@@ -103,7 +102,7 @@
               class="mx-auto"
               :loading="loading"
               dense
-              style="width:100%;"
+              style="width: 100%;"
             >
               <v-icon class="mr-4">mdi-send</v-icon>
               Submit
@@ -119,42 +118,41 @@
     </v-container>
 
     <v-snackbar v-model="errorSnackbar" color="error" top>
-  Please fill in all required fields.
-  <v-btn text @click="errorSnackbar = false" icon color="transparent" elevation="0"><v-icon>mdi-close</v-icon></v-btn>
-</v-snackbar>
+      Please fill in all required fields.
+      <v-btn text @click="errorSnackbar = false" icon color="transparent" elevation="0"><v-icon>mdi-close</v-icon></v-btn>
+    </v-snackbar>
 
-    
   </div>
 
-  <v-footer style="background-color:#02338D;" >
+  <v-footer style="background-color:#02338D;">
     <v-container>
       <v-row align="center">
         <!-- Logo -->
         <v-col cols="12" md="4" class="text-center">
           <img src="/Images/iLab white Logo-01.png" alt="iLabAfrica Logo" style="max-width: 300px;">
         </v-col>
-        
+
         <!-- Contact Column -->
         <v-col cols="12" md="4">
           <h3 style="color: white; text-transform: uppercase;">Contact</h3>
-          <p style="color: white;font-size: 16px;text-transform: none;">Address: Strathmore University Student Centre, Keri Road</p>
-          <p style="color: white;font-size: 16px;text-transform: none;">Phone: +254 703 034 616</p>
-          <p style="color: white;font-size: 16px;text-transform: none;">Email: ilabafrica@strathmore.edu</p>
-          <p style="color: white;font-size: 16px;text-transform: none;">Mon-Fri: 8:00AM - 5:00PM</p>
+          <p style="color: white; font-size: 16px; text-transform: none;">Address: Strathmore University Student Centre, Keri Road</p>
+          <p style="color: white; font-size: 16px; text-transform: none;">Phone: +254 703 034 616</p>
+          <p style="color: white; font-size: 16px; text-transform: none;">Email: ilabafrica@strathmore.edu</p>
+          <p style="color: white; font-size: 16px; text-transform: none;">Mon-Fri: 8:00AM - 5:00PM</p>
 
         </v-col>
-        
+
         <!-- Quick Links Column -->
         <v-col cols="12" md="4">
           <h3 style="color: white; text-transform: uppercase;">Quick Links</h3>
           <ul style="list-style-type: none; padding: 0;">
-            <li><a href="/" style="color: white; text-decoration: none;text-transform: none;">Home</a></li>
-            <li><a href="/feedback" style="color: white; text-decoration: none;text-transform: none;">Give Feedback</a></li>
+            <li><a href="/" style="color: white; text-decoration: none; text-transform: none;">Home</a></li>
+            <li><a href="/feedback" style="color: white; text-decoration: none; text-transform: none;">Give Feedback</a></li>
             <!-- Add more quick links as needed -->
           </ul>
         </v-col>
       </v-row>
-      
+
       <!-- Copyright Text -->
       <v-row>
         <v-col cols="12">
@@ -166,7 +164,6 @@
     </v-container>
   </v-footer>
 
-  
 </template>
 
 <script>
@@ -298,51 +295,50 @@ export default {
     },
 
     async submitFeedback() {
-  this.loading = true;
-  try {
-    // Check if all required fields are filled in
-    if (!this.selectedCategory || !this.selectedSubcategory || !this.subject || !this.feedback) {
-      // If any required field is empty, display the snackbar
-      this.errorSnackbar = true;
-      return; // Exit the function early
+      // Check if all required fields are filled in
+      if (!this.selectedCategory || !this.selectedSubcategory || !this.subject || !this.feedback) {
+        // If any required field is empty, display the snackbar
+        this.errorSnackbar = true;
+        return; // Exit the function early
+      }
+
+      this.loading = true;
+      try {
+        // Fetch the subcategory_id associated with the selected category
+        const subcategoryId = this.selectedSubcategory;
+
+        // Submit the feedback form
+        const response = await axiosInstance.post('/feedback', {
+          category_id: this.selectedCategory,
+          subcategory_id: subcategoryId, // Include the subcategory_id
+          subject: this.subject,
+          name: this.name,
+          email: this.email,
+          feedback: this.feedback,
+          other_category: this.otherCategory, // Include otherCategory if it's available
+        });
+        console.log('Response from server:', response); // Check the response from the server
+        this.successMessage = response.data.message;
+        console.log('Success message:', this.successMessage); // Check the success message
+        // Optionally, reset form fields after successful submission
+        this.selectedCategory = '';
+        this.selectedSubcategory = ''; // Reset selected subcategory
+        this.subject = '';
+        this.name = '';
+        this.email = '';
+        this.feedback = '';
+        this.otherCategory = ''; // Reset otherCategory field
+
+        // Set a timeout to clear the success message after 4 seconds
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 4000);
+      } catch (error) {
+        console.error('Error submitting feedback:', error);
+      } finally {
+        this.loading = false;
+      }
     }
-
-    // Fetch the subcategory_id associated with the selected category
-    const subcategoryId = this.selectedSubcategory;
-
-    // Submit the feedback form
-    const response = await axiosInstance.post('/feedback', {
-      category_id: this.selectedCategory,
-      subcategory_id: subcategoryId, // Include the subcategory_id
-      subject: this.subject,
-      name: this.name,
-      email: this.email,
-      feedback: this.feedback,
-      other_category: this.otherCategory, // Include otherCategory if it's available
-    });
-    console.log('Response from server:', response); // Check the response from the server
-    this.successMessage = response.data.message;
-    console.log('Success message:', this.successMessage); // Check the success message
-    // Optionally, reset form fields after successful submission
-    this.selectedCategory = '';
-    this.selectedSubcategory = ''; // Reset selected subcategory
-    this.subject = '';
-    this.name = '';
-    this.email = '';
-    this.feedback = '';
-    this.otherCategory = ''; // Reset otherCategory field
-    
-    // Set a timeout to clear the success message after 4 seconds
-    setTimeout(() => {
-      this.successMessage = '';
-    }, 4000);
-  } catch (error) {
-    console.error('Error submitting feedback:', error);
-  } finally {
-    this.loading = false;
-  }
-}
-
   },
 
   watch: {
