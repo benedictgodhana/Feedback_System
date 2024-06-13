@@ -1,6 +1,6 @@
 <template>
   <v-card style="margin: 8px;border-radius: 10px;" variant="outlined" elevation="3" height="200" width="300">
-    <v-img src="/multiple-users-silhouette_33308.png" style="margin-top: 10px;" height="50" contain></v-img>
+    <v-img src="/Images/multiple-users-silhouette_33308.png" style="margin-top: 10px;" height="50" contain></v-img>
     <v-card-title style="font-size: 14px;">Number of Users</v-card-title>
     <v-card-text>{{ userCount }}</v-card-text>
     <v-card-actions>

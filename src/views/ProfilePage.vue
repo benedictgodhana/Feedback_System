@@ -51,8 +51,8 @@
 
 <script>
 import axiosInstance from '@/service/api';
-import AdminSidebar from '@/components/AdminSidebar.vue';
-import AdminNavbar from '@/components/AdminNavbar.vue';
+import AdminSidebar from '@/components/SuperAdminSidebar.vue';
+import AdminNavbar from '@/components/SuperAdminNavbar.vue';
 
 export default {
   components: {

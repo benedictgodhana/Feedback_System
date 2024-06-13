@@ -16,6 +16,11 @@ import SuperAdminProfile from '../views/SuperAdmin/SuperAdminProfile.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import PasswordReset from '../views/PasswordReset.vue';
 import FeedbackTable from '@/views/Admin/FeedbackTable.vue';
+import FeedbackDetails from '@/views/SuperAdmin/FeedbackTable.vue';
+import ManageSubCategories from '../views/SuperAdmin/ManageFeedbackSubcategories.vue';
+import FeedbackDetail from '@/components/FeedbackDetail.vue'
+
+
 
 
 
@@ -30,9 +35,21 @@ const router = createRouter({
   routes: [
 
     {
+      path: '/feedback/:id',
+      name: 'FeedbackDetail',
+      component: FeedbackDetail
+    },
+
+    {
       path: '/feedback-table/:category',
       name: 'FeedbackTable',
       component: FeedbackTable,
+      props: true, // Pass route params as props to the component
+    },
+    {
+      path: '/feedback-details/:category',
+      name: 'FeedbackDetails',
+      component: FeedbackDetails,
       props: true, // Pass route params as props to the component
     },
     {
@@ -118,6 +135,13 @@ const router = createRouter({
       path: '/superadmin/manage-categories',
       name: 'ManageCategories',
       component: ManageCategories,
+      meta: { requiresAuth: true },
+    },
+
+    {
+      path: '/superadmin/manage-subcategories',
+      name: 'ManageSubCategories',
+      component: ManageSubCategories,
       meta: { requiresAuth: true },
     },
    

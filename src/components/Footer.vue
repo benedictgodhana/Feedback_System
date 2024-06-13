@@ -1,10 +1,10 @@
 <template>
-    <v-footer style="background-color: #385cad;" >
+    <v-footer style="background-color:#02338D;" >
   <v-container>
     <v-row align="center">
       <!-- Logo -->
       <v-col cols="12" md="4" class="text-center">
-        <img src="/iLab white Logo-01.png" alt="iLabAfrica Logo" style="max-width: 300px;">
+        <img src="/Images/iLab white Logo-01.png" alt="iLabAfrica Logo" style="max-width: 300px;">
       </v-col>
       
       <!-- Contact Column -->

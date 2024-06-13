@@ -1,102 +1,114 @@
 <template>
+  <Navbar></Navbar>
+  <div class="container">
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <div class="logo">
+            <img src="/Images/iLab white Logo-01.png" alt="Logo" style="height: 360px; margin-left: -30px;width:100%">
 
-  <div>
-    <Navbar></Navbar>
 
-    <v-carousel cycle :show-arrows="false" hide-delimiter  height="500" style="margin-top: -40px;">
-      <v-carousel-item v-for="(item, index) in carouselItems" :key="index" :src="item.image" cover>
-        <!-- Overlay text and buttons -->
-        <div class="overlay">
-          <v-btn  large to="/feedback" class="btn-get-involved" style="text-transform: capitalize;  background:#385cad;color:white;width:200px;border-radius:0px;margin-top: 230px;margin-left: -0px;" elevation="4"><v-icon>mdi-comment-quote</v-icon>Give a feedback</v-btn>
+          </div>
+          
+
+
+          <v-card-text style="margin-top: 290px;">
+            <v-btn class="hidden-sm-and-up" width="100%" style="max-width: 320px;color:white;height:43px;margin-left: -510px;" text to="/feedback" color="orange" elevation="2"><v-icon color="white" size="23">mdi-email</v-icon><span style="color:white;font-size:17px;"> Give Feedback</span></v-btn>
+
+          </v-card-text>
         </div>
-      </v-carousel-item>
-    </v-carousel>
+      </div>
+      <div class="panel right-panel">
 
-    <v-sheet style="background:#385cad;">
-      <v-card-text class="text-center">
-        <em style="font-size: 18px;color:white;text-transform:capitalize;font-weight: 600;">Changing Lives Through Research and Innovation </em>
-      </v-card-text>
-    </v-sheet>
-
-    <v-container>
-      
-
-      <!-- Relevant cards with icons -->
-      <v-row>
-  <v-col cols="12" md="4">
-    <v-card color="white" variant="outlined" style="border-radius:0 40px 0 40px;background-color:#385cad;" height="400px">
-<v-card-title class="text-center" style="margin-top: 20px;"><v-icon size="108">mdi-comment-account</v-icon></v-card-title>
-      <v-card-title class="text-center">User Feedback</v-card-title>
-      <v-card-text>
-        Provide valuable feedback on your experience with iLabAfrica's services, events, and projects. Your input helps us continually improve and innovate.
-      </v-card-text>
-    </v-card>
-  </v-col>
-
-  <v-col cols="12" md="4" >
-    <v-card  color="white" variant="outlined" style="border-radius:0 40px 0 40px;background-color: green;" height="400px">
-      <v-card-title class="text-center" style="margin-top: 20px;"><v-icon size="108">mdi-email</v-icon></v-card-title>
-      <v-card-title class="text-center">Email Feedback</v-card-title>
-      <v-card-text >
-        Send your feedback directly to our team via email. We value your opinions and strive to address any concerns or suggestions promptly.
-      </v-card-text>
-    </v-card>
-  </v-col>
-
-  <v-col cols="12" md="4">
-    <v-card  color="white" variant="outlined" style="border-radius:0 40px 0 40px;background-color:chocolate;" height="100%">
-      <v-card-title class="text-center" style="margin-top: 20px;"><v-icon size="108">mdi-chat</v-icon></v-card-title>
-      <v-card-title class="text-center">Live Chat</v-card-title>
-      <v-card-text>
-        Engage in real-time discussions with our support team through email. Get immediate assistance or share your feedback conveniently.
-      </v-card-text>
-    </v-card>
-  </v-col>
-</v-row>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-    </v-container>
-
-    
-    <!-- Footer -->
-    <v-footer style="background-color: #385cad;">
-      <v-container>
-        <v-row align="center">
-          <!-- Logo -->
-          <v-col cols="12" md="4" class="text-center">
-            <img src="/iLab white Logo-01.png" alt="iLabAfrica Logo" style="max-width: 300px;">
-          </v-col>
-          
-          <!-- Contact Column -->
-          <v-col cols="12" md="4">
-            <h3 style="color: white; text-transform: uppercase;">Contact</h3>
-            <p style="color: white;font-size: 16px;text-transform: none;">Address: Strathmore University Student Centre, Keri Road</p>
-            <p style="color: white;font-size: 16px;text-transform: none;">Phone: +254 703 034 616</p>
-            <p style="color: white;font-size: 16px;text-transform: none;">Email: ilabafrica@strathmore.edu</p>
-            <p style="color: white;font-size: 16px;text-transform: none;">Mon-Fri: 8:00AM - 5:00PM</p>
-          </v-col>
-          
-          <!-- Quick Links Column -->
-          <v-col cols="12" md="4">
-            <h3 style="color: white; text-transform: uppercase;">Quick Links</h3>
-            <ul style="list-style-type: none; padding: 0;">
-              <li><a href="/" style="color: white; text-decoration: none;text-transform: none;">Home</a></li>
-              <li><a href="/feedback" style="color: white; text-decoration: none;text-transform: none;">Give Feedback</a></li>
-              <!-- Add more quick links as needed -->
-            </ul>
-          </v-col>
-        </v-row>
+        <v-container>
+          <v-card-title class="text-start" style="font-size:28px">Welcome to @iLabAfrica Feedback System</v-card-title>
+          <v-card-subtitle class="text-start ">Please provide your valuable feedback to help us improve our services.</v-card-subtitle>
+        </v-container>
         
-        <!-- Copyright Text -->
-        <v-row>
-          <v-col cols="12">
-            <p style="color: white; text-align: center; margin: 0; text-transform: none; font-size: 17px;">
-              &copy; 2024 @iLabAfrica, Strathmore University. All rights reserved.
-            </p>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-footer>
-  </div>
+        <v-card-text class="text-center">
+          
+            <v-row justify="start">
 
+              
+    <v-col cols="12" md="6">
+      <v-card class="pa-4" outlined style="border-radius: 10px;" elevation="4">
+        <v-icon size="48" >mdi-lightbulb-outline</v-icon>                                                                                                                                                                                                                                                                                                                                                                   
+        <v-card-title class="text-overline">Ideas</v-card-title>
+        <v-divider></v-divider>
+
+<v-list-item
+  append-icon="mdi-chevron-right"
+  lines="two"
+  style="background-color:#02338D;color:white;text-transform: capitalize;"
+  link
+  to="/feedback"
+>
+Share your great ideas with us                                                                                                                                                                                                                                          
+</v-list-item>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="6">
+      <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
+        <v-icon size="48" >mdi-comment-check-outline</v-icon>
+        <v-card-title class="text-overline">Feedback</v-card-title>
+        <v-divider></v-divider>
+
+<v-list-item
+  append-icon="mdi-chevron-right"
+  lines="two"
+  style="background-color:#02338D;color:white;text-transform: capitalize;"
+  link
+  to="/feedback"
+>
+Provide feedback on your Experiences
+</v-list-item>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="6" >
+      <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
+        <v-icon size="48" >mdi-alert-circle-outline</v-icon>
+        <v-card-title class="text-overline">Issues</v-card-title>
+        <v-divider></v-divider>
+
+<v-list-item
+  append-icon="mdi-chevron-right"
+  lines="two"
+  style="background-color:#02338D;color:white;text-transform: capitalize;"
+  link
+  to="/feedback"  
+>
+Report any issues you encounter.
+</v-list-item>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="6" >
+      <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
+        <v-icon size="48" >mdi-help-circle-outline</v-icon>
+        <v-card-title class="text-overline">Suggestions</v-card-title>
+        <v-divider></v-divider>
+
+<v-list-item
+  append-icon="mdi-chevron-right"
+  lines="two"
+  style="background-color:#02338D;color:white;text-transform: capitalize;"
+  link
+  to="/feedback"
+>
+Share with us your valuable suggestions
+</v-list-item>
+      </v-card>
+      
+    </v-col>
+  </v-row>
+  <br>
+  <br>
+  <br>
+  <v-btn width="100%" style="max-width: 350px;color:white;height:43px" text to="/feedback" color="orange" elevation="5"><v-icon color="white" size="23">mdi-email</v-icon><span style="color:white;font-size:17px;"> Give Feedback</span></v-btn>
+
+        </v-card-text>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -108,81 +120,486 @@ export default {
   },
   data() {
     return {
-      carouselItems: [
-        { image: '/wepik-export-20240415125155eqTS.jpeg' },
-      ],
+      signUpMode: false,
+      email: '',
+      password: ''
     };
   },
+  methods: {
+    submitForm() {
+      // Form submission logic
+    }
+  }
 };
 </script>
-
 <style>
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+
+.text-card {
+  padding: 20px; /* Add padding to the card */
+  border-radius: 20px; /* Add rounded corners to the card */
+  background-color: #f7f7f7; /* Set background color */
+}
+
+.text-content {
+  font-size: 18px; /* Increase font size */
+  line-height: 1.6; /* Increase line height for better readability */
+  color: #333; /* Set text color */
+}
+
+.content-wrapper {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 20px; /* Add margin for spacing */
+}
+.welcome-text {
+  margin-top: 20px; /* Adjust margin as needed */
+  color:black;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+  margin-top: -120px; /* Adjust margin as needed */
+}
+
+.home-btn{
+margin-left:1680px;
+text-decoration: none;
+border: 2px solid;
+}
+
+.container {
+position: relative;
+width: 100%;
+background-color: #fff;
+min-height: 90vh;
+overflow: hidden;
+}
+
+.forms-container {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+}
+
+.signin-signup {
+position: absolute;
+top: 50%;
+transform: translate(-50%, -50%);
+left: 75%;
+width: 50%;
+transition: 1s 0.7s ease-in-out;
+display: grid;
+grid-template-columns: 1fr;
+z-index: 5;
+}
+
+.title {
+font-size: 2.2rem;
+color: #444;
+margin-bottom: 10px;
+}
+
+
+.input-field input {
+background: none;
+outline: none;
+border: none;
+line-height: 1;
+font-weight: 600;
+font-size: 1.1rem;
+color: #333;
+
+}
+
+.input-field input::placeholder {
+color: #aaa;
+font-weight: 500;
+}
+
+.social-text {
+padding: 0.7rem 0;
+font-size: 1rem;
+}
+
+.social-media {
+display: flex;
+justify-content: center;
+}
+
+.social-icon {
+height: 46px;
+width: 46px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 0.45rem;
+color: #333;
+border-radius: 50%;
+border: 1px solid #333;
+text-decoration: none;
+font-size: 1.1rem;
+transition: 0.3s;
+}
+
+.social-icon:hover {
+color: #4481eb;
+border-color: #4481eb;
+}
+
+.btn {
+width: 380px;
+background-color:darkblue;
+border: none;
+outline: none;
+height: 49px;
+border-radius: 49px;
+color: #fff;
+text-transform: uppercase;
+font-weight: 600;
+margin: 10px 0;
+cursor: pointer;
+transition: 0.5s;
+}
+
+.btn:hover {
+background-color:green;
+}
+.panels-container {
+position: absolute;
+height: 100%;
+width: 100%;
+top: 0;
+left: 0;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+}
+
+.container:before {
+content: "";
+position: absolute;
+height: 2000px;
+width: 2000px;
+top: -10%;
+right: 48%;
+transform: translateY(-50%);
+background:#02338D;
+transition: 1.8s ease-in-out;
+border-radius: 50%;
+z-index: 6;
+}
+
+.image {
+width: 100%;
+transition: transform 1.1s ease-in-out;
+transition-delay: 0.4s;
+}
+
+.panel {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   text-align: center;
-  text-transform: capitalize;
-}
-.overlay .headline {
-  font-size: 24px;
-}
-.overlay .subtext {
-  margin-top: 10px;
-  font-size: 16px;
-}
-.btn-get-involved {
-  margin: 14px;
-  border-radius: 20px;
-  text-transform: lowercase;
-}
-.activity-card {
-  margin-bottom: 20px;
-  border-radius: 20px;
-}
-.v-footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  background-color: #385cad;
-  color: white;
+  z-index: 6;
 }
 
-/* Footer content container */
-.v-footer__content {
-  padding: 20px 0; /* Adjust padding as needed */
+.left-panel {
+  padding: 3rem 17% 2rem 12%;
 }
 
-/* Footer columns */
-.v-footer__column {
-  margin-bottom: 20px; /* Add some spacing between columns */
+.right-panel {
+  padding: 3rem 12% 2rem 17%;
 }
 
-/* Footer links */
-.v-footer__link {
-  color: white;
-  text-decoration: none;
+
+.panel .content {
+color: #fff;
+transition: transform 0.9s ease-in-out;
+transition-delay: 0.6s;
+margin-top: -220px;
 }
 
-/* Footer copyright text */
-.v-footer__copyright {
-  margin-top: 20px; /* Add some spacing above the copyright text */
-  font-size: 14px; /* Reduce font size for smaller screens */
+.panel h3 {
+font-weight: 600;
+line-height: 1;
+font-size: 1.5rem;
+margin-left: -300px;
 }
 
-/* Media query for smaller screens */
-@media screen and (max-width: 600px) {
-  /* Adjust footer column layout for smaller screens */
-  .v-footer__column {
-    width: 100%;
-    text-align: center;
-  }
+.panel p {
+font-size: 0.95rem;
+padding: 0.7rem 0;
+margin-left: -210px;
+
+}
+
+.btn.transparent {
+margin: 0;
+background: none;
+border: 2px solid #fff;
+width: 230px;
+height: 41px;
+font-weight: 600;
+font-size: 0.8rem;
+margin-left: -220px;
+text-decoration: none;
+}
+.btn.transparent a{
+color:white;
+text-decoration: none;
+}   
+
+.right-panel .image,
+.right-panel .content {
+transform: translateX(800px);
+}
+
+/* ANIMATION */
+
+.container.sign-up-mode:before {
+transform: translate(100%, -50%);
+right: 52%;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+transform: translateX(-800px);
+}
+
+.container.sign-up-mode .signin-signup {
+left: 25%;
+}
+
+.container.sign-up-mode form.sign-up-form {
+opacity: 1;
+z-index: 2;
+}
+
+.container.sign-up-mode form.sign-in-form {
+opacity: 0;
+z-index: 1;
+}
+
+.container.sign-up-mode .right-panel .image,
+.container.sign-up-mode .right-panel .content {
+transform: translateX(0%);
+}
+
+.container.sign-up-mode .left-panel {
+pointer-events: none;
+}
+
+.container.sign-up-mode .right-panel {
+pointer-events: all;
+}
+
+@media (max-width: 870px) {
+.container {
+min-height: 800px;
+height: 100vh;
+}
+.signin-signup {
+width: 100%;
+top: 95%;
+transform: translate(-50%, -100%);
+transition: 1s 0.8s ease-in-out;
+}
+
+.signin-signup,
+.container.sign-up-mode .signin-signup {
+left: 50%;
+}
+
+.panels-container {
+grid-template-columns: 1fr;
+grid-template-rows: 1fr 2fr 1fr;
+}
+
+.panel {
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+padding: 2.5rem 8%;
+grid-column: 1 / 2;
+}
+
+.right-panel {
+grid-row: 3 / 4;
+margin-left: -40px;
+}
+
+.left-panel {
+grid-row: 1 / 2;
+}
+
+.image {
+width: 200px;
+transition: transform 0.9s ease-in-out;
+transition-delay: 0.6s;
+}
+
+.panel .content {
+padding-right: 15%;
+transition: transform 0.9s ease-in-out;
+transition-delay: 0.8s;
+}
+
+.panel h3 {
+font-size: 1.2rem;
+
+}
+
+.panel p {
+font-size: 0.7rem;
+padding: 0.5rem 0;
+}
+
+.btn.transparent {
+width: 110px;
+height: 35px;
+font-size: 0.7rem;
+}
+.btn.transparent a{
+color:white;
+text-decoration: none;
+}
+
+.container:before {
+width: 1500px;
+height: 1500px;
+transform: translateX(-50%);
+left: 30%;
+bottom: 68%;
+right: initial;
+top: initial;
+transition: 2s ease-in-out;
+background:#02338D;
+
+}
+
+.container.sign-up-mode:before {
+transform: translate(-50%, 100%);
+bottom: 32%;
+right: initial;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+transform: translateY(-300px);
+}
+
+.container.sign-up-mode .right-panel .image,
+.container.sign-up-mode .right-panel .content {
+transform: translateY(0px);
+}
+
+.right-panel .image,
+.right-panel .content {
+transform: translateY(300px);
+}
+
+.container.sign-up-mode .signin-signup {
+top: 5%;
+transform: translate(-50%, 0);
+}
+}
+
+@media (max-width: 570px) {
+form {
+padding: 0 1.5rem;
+}
+
+.image {
+display: none;
+}
+.logo img {
+  max-width: 40%;
+  height: auto;
+  margin-right: 520px;
+  margin-top: 0px; /* Adjust margin as needed */
+}
+
+.btn {
+width: 320px;
+border: none;
+outline: none;
+height: 49px;
+border-radius: 49px;
+color: #fff;
+text-transform: uppercase;
+font-weight: 600;
+margin: 10px 0;
+cursor: pointer;
+transition: 0.5s;
+}
+
+.btn:hover {
+background-color:green;
+}
+.panel .content {
+padding: 0.5rem 1rem;
+}
+.container {
+padding: 1.5rem;
+}
+
+.panel .content {
+color: #fff;
+transition: transform 0.9s ease-in-out;
+transition-delay: 0.6s;
+margin-top: 20px;
+}
+
+
+.container:before {
+bottom: 52%;
+left: 50%;
+background:#02338D;
+
+}
+
+.container.sign-up-mode:before {
+bottom: 28%;
+left: 50%;
+}
+.panel h3 {
+font-weight: 600;
+line-height: 1;
+font-size: 1.5rem;
+margin-left:0px;
+}
+
+.panel p {
+font-size: 0.95rem;
+padding: 0.7rem 0;
+margin-left:0px;
+
+}
+.btn.transparent {
+margin: 0;
+background: none;
+border: 2px solid #fff;
+width: 230px;
+height: 41px;
+font-weight: 600;
+font-size: 0.8rem;
+margin-left: 20px;
+text-decoration: none;
+}
+.btn.transparent a{
+color:white;
+text-decoration: none;
+}
+.btn-d{
+width: 320px;
+margin-left: 159px;
+top:-20px;
+
+}
+
 }
 </style>

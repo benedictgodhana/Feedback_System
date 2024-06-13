@@ -124,7 +124,7 @@
   
   <script>
   import SuperAdminSidebar from '@/components/SuperAdminSidebar.vue';
-  import AdminNavbar from '@/components/AdminNavbar.vue';
+  import AdminNavbar from '@/components/SuperAdminNavbar.vue';
   import axiosInstance from '@/service/api'; // Corrected import path
   
   export default {

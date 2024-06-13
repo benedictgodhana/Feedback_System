@@ -8,7 +8,7 @@
         <!-- Manage Users -->
         <v-list-item to="/superadmin/manage-users" prepend-icon="mdi-account-group" title="Manage Users" color="white"  elevation="0" active-class="active-button">
         </v-list-item>
-        <v-list-item to="/superadmin/manage-feedback" prepend-icon="mdi-comment-quote" title="Manage Feedback" color="white"  elevation="0" active-class="active-button">
+        <v-list-item to="/superadmin/manage-feedback" prepend-icon="mdi-email" title="Manage Feedback" color="white"  elevation="0" active-class="active-button">
           
         </v-list-item>
   
@@ -16,6 +16,11 @@
         <v-list-item to="/superadmin/manage-categories" prepend-icon="mdi-briefcase" title="Feedback Categories"  color="white" elevation="0" active-class="active-button">
           
         </v-list-item>
+
+        <v-list-item to="/superadmin/manage-subcategories" prepend-icon="mdi-tag" title="Feedback SubCategories"  color="white" elevation="0" active-class="active-button">
+          
+        </v-list-item>
+
   
         <!-- Manage Bookings -->
       

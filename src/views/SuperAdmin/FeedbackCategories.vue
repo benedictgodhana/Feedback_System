@@ -1,6 +1,6 @@
 <template>
     <!-- Navigation bar -->
-    <AdminNavbar></AdminNavbar>
+    <SuperAdminNavbar></SuperAdminNavbar>
 
     <!-- Sidebar -->
     <SuperAdminSidebar :sidebar="sidebar" @toggle-sidebar="toggleSidebar" />
@@ -100,13 +100,13 @@
 
 <script>
 import SuperAdminSidebar from '@/components/SuperAdminSidebar.vue';
-import AdminNavbar from '@/components/AdminNavbar.vue';
+import SuperAdminNavbar from '@/components/SuperAdminNavbar.vue';
 import axiosInstance from '@/service/api'; // Corrected import path
 
 export default {
   components: {
     SuperAdminSidebar,
-    AdminNavbar,
+    SuperAdminNavbar,
   },
   data() {
     return {
@@ -114,8 +114,8 @@ export default {
       services: [], // Initialize an empty array for service details
       search: '', // Initialize search string
       headers: [
-      { title: 'Feedback Title', value: 'name' },
-        { title: 'Feedback Description', value: 'description' },
+      { title: 'Category Title', value: 'name' },
+        { title: 'Category Description', value: 'description' },
         
         { title: 'Action', value: 'action' },
         // Add more headers as needed

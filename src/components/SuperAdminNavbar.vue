@@ -2,7 +2,7 @@
   <v-app-bar app height="100" style="background:#385cad; color: white;" elevation="0">
     <!-- Logo -->
     <v-header>
-     <a href="/superadmin"><img src="/iLab white Logo-01.png" alt="Logo" height="230" style="margin-top: 30px;margin-left: 20px;"></a> 
+     <a href="/superadmin"><img src="/Images/iLab white Logo-01.png" alt="Logo" height="230" style="margin-top: 30px;margin-left: 20px;"></a> 
     </v-header>
 
    <v-spacer></v-spacer>

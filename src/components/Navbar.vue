@@ -1,6 +1,6 @@
 <template>
   
-  <v-app-bar app height="100" style="background:#385cad;color:white; display: flex; align-items: center;" elevation="0">
+  <v-app-bar app height="100" style="background:#02338D;color:white; display: flex; align-items: center;" elevation="0">
 
 <!-- Menu button for small screens -->
 <v-btn class="menu-btn hidden-md-and-up" icon @click="sidebar = !sidebar">
@@ -9,7 +9,6 @@
 
 <!-- Logo -->
 <v-header>
-  <img src="/iLab white Logo-01.png" alt="Logo" height="210" style="margin-left: 20px;">
 </v-header>
 
 <!-- Spacer to push buttons to the right -->
@@ -20,7 +19,7 @@
   <v-icon size="16" class="btn-icon">mdi-home</v-icon>Home
 </v-btn>
 <v-btn class="nav-btn hidden-sm-and-down" text to="/feedback" style="text-transform: capitalize;">
-  <v-icon size="13" class="btn-icon">mdi-comment-quote</v-icon>Give feedback
+  <v-icon size="13" class="btn-icon">mdi-email</v-icon>Give feedback
 </v-btn>
 <v-btn class="nav-btn hidden-sm-and-down" @click="showSignInModal" style="text-transform: capitalize;">
   <v-icon size="16" class="btn-icon">mdi-account</v-icon>Login
@@ -62,75 +61,36 @@
 
 
 
-
- <v-dialog v-model="signInModal" max-width="700px" >
-    <v-card style="border-radius:3px" elevation="4">
-      <v-toolbar color="white">
-        <v-spacer></v-spacer>
-        <v-btn
-        color="gray"
-        text
-        icon
-        @click="signInModal = false"
-        style="color:black">
-        <v-icon color="grey-lighten">
-                mdi-close
-              </v-icon>
-        <v-tooltip
-        activator="parent"
-        location="bottom"
-      >Close 
-    </v-tooltip>
-    </v-btn>
-      </v-toolbar>
-      <v-card-text>
-
-      <img src="/LOGO_2.png"       class="hidden-sm-and-down"
- alt="Logo" height="200" style="margin-top:0px; margin-left:70px" />
-        <v-form @submit.prevent="signIn">
-  <v-text-field
-    v-model="signInData.email"
-    label="Email" 
-    hint="For example, username@example.com"
-    required
-    prepend-inner-icon="mdi-email"
-    variant="outlined"
-  ></v-text-field>
-  <v-text-field
-    v-model="signInData.password"
-    label="Password"
-    type="password"
-    required
-    prepend-inner-icon="mdi-lock"
-    variant="outlined"
-  ></v-text-field>
-  <!-- Login button with loading state -->
-  <v-btn
-    :loading="loading"
-    type="submit"
-    style="
-      border-radius: 2px;
-      width: 100%;
-      text-transform: lowercase;
-      background: #385cad;
-      color: white;
-    "
-  >
-    <v-icon left style="margin: 3px">mdi-login</v-icon>
-    Login
-  </v-btn>
-  <div class="text-center mt-2">
-    <a href="/forgot_password"  style="text-decoration: none;color:#385cad" @click="forgotPassword">Forgot Password?</a>
-  </div>
-</v-form>
-
-      </v-card-text>
-
-      <v-card-actions class="justify-center">
+<v-dialog v-model="signInModal" max-width="700px">
+  <v-card style="border-radius:10px" elevation="4">
+    <v-toolbar color="white">
+      <v-spacer></v-spacer>
+      <v-btn color="gray" text icon @click="signInModal = false" style="color:black">
+        <v-icon color="grey-lighten">mdi-close</v-icon>
+        <v-tooltip activator="parent" location="bottom">Close</v-tooltip>
+      </v-btn>
+    </v-toolbar>
+    <v-card-text>
+      <img src="/Images/LOGO_2.png" class="hidden-sm-and-down" alt="Logo" height="200" style="margin-top:0px; margin-left:70px" />
+      <v-form @submit.prevent="signIn">
+        <v-text-field v-model="signInData.email" label="Email" hint="For example, username@example.com" required :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']" prepend-inner-icon="mdi-email" variant="outlined"></v-text-field>
+        <v-text-field v-model="signInData.password" label="Password" type="password" required :rules="[v => !!v || 'Password is required']" prepend-inner-icon="mdi-lock" variant="outlined"></v-text-field>
+        <!-- Login button with loading state -->
+        <v-btn :loading="loading" type="submit" style="border-radius: 2px; width: 100%; text-transform: lowercase; background:#02338D; color: white;">
+          <v-icon left style="margin: 3px">mdi-login</v-icon>
+          Login
+        </v-btn>
+        <div class="text-center mt-2">
+          <a href="/forgot_password" style="text-decoration: none;color:#02338D" @click="forgotPassword">Forgot Password?</a>
+        </div>
+      </v-form>
+    </v-card-text>
+    <v-card-actions class="justify-center">
       <span>&copy; {{ new Date().getFullYear() }} All Rights Reserved</span>
     </v-card-actions>
-    </v-card>
-  </v-dialog>
+  </v-card>
+</v-dialog>
+
 
  <!-- Sign Up Modal -->
  <v-dialog v-model="signUpModal" max-width="700px">
@@ -138,11 +98,11 @@
     <v-card-title class="text-center" style="color:black;font-weight: 800;">Sign Up</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="signUp">
-        <v-text-field v-model="signUpData.name" label="Name" required variant="outlined"></v-text-field>
-        <v-text-field v-model="signUpData.email" label="Email" required variant="outlined"></v-text-field>
-        <v-text-field v-model="signUpData.password" label="Password" type="password" required variant="outlined"></v-text-field>
-        <v-text-field v-model="signUpData.passwordConfirmation" label="Confirm Password" type="password" required variant="outlined"></v-text-field>
-        <v-btn :loading="loading"  type="submit" color="success" style="border-radius: 10px; width: 100%;">
+        <v-text-field v-model="signUpData.name" label="Name" required :rules="[v => !!v || 'Name is required']" variant="outlined"></v-text-field>
+        <v-text-field v-model="signUpData.email" label="Email" required :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']" variant="outlined"></v-text-field>
+        <v-text-field v-model="signUpData.password" label="Password" type="password" required :rules="[v => !!v || 'Password is required', v => (v && v.length >= 8) || 'Password must be at least 8 characters']" variant="outlined"></v-text-field>
+        <v-text-field v-model="signUpData.passwordConfirmation" label="Confirm Password" type="password" required :rules="[v => !!v || 'Confirm Password is required', v => (v && v === signUpData.password) || 'Passwords do not match']" variant="outlined"></v-text-field>
+        <v-btn :loading="loading" type="submit" color="success" style="border-radius: 10px; width: 100%;">
           <v-icon>mdi-account-plus</v-icon> Sign Up
         </v-btn>
       </v-form>
@@ -152,6 +112,11 @@
   </v-card>
 </v-dialog>
 
+
+<v-snackbar v-model="errorSnackbar" color="error" top>
+  {{ errorMessage }}
+  <v-btn text @click="errorSnackbar = false" icon elevation="0" color="transparent"><v-icon>mdi-close</v-icon></v-btn>
+</v-snackbar>
 
 
 
@@ -169,6 +134,8 @@ export default {
 name: 'App',
 data() {
  return {
+  errorSnackbar: false,
+    errorMessage: '',
   recaptchaToken: null,
   showErrorAlert: false,
   loginSuccessAlertVisible: false, // Initially set to false
@@ -292,9 +259,10 @@ signIn() {
     })
     .catch(error => {
       console.error('Authentication failed:', error.response.data.error);
+      this.errorMessage = 'Invalid email or password';
+      this.errorSnackbar = true;
       
-      // Show v-alert for authentication failure
-      this.showErrorAlert = true;
+     
 
 // Hide the alert after 5 seconds
 setTimeout(() => {

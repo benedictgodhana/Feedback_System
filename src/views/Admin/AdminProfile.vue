@@ -5,7 +5,7 @@
 
     <v-container>
       <v-card variant="outlined">
-        <v-card-title class="text-center" style="background-color:#385cad;color:white;text-transform: capitalize;">Profile</v-card-title>
+        <v-card-title class="text-center" style="background-color:#02338D;color:white;text-transform: capitalize;">Profile</v-card-title>
 
         <v-card-text style="margin-top: 20px;">
           <v-text-field v-model="user.name" label="Username" outlined variant="outlined"></v-text-field>
@@ -14,15 +14,15 @@
           <!-- Add more profile fields as needed -->
         </v-card-text>
         <v-card-actions>
-          <v-btn color="white" @click="updateUserProfile" style="background: green;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Update Profile</v-btn>
-          <v-btn color="white" @click="openChangePasswordDialog" style="background: green;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Change Password</v-btn>
+          <v-btn color="white" @click="updateUserProfile" style="background:#02338D;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Update Profile</v-btn>
+          <v-btn color="white" @click="openChangePasswordDialog" style="background:#02338D;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Change Password</v-btn>
         </v-card-actions>
       </v-card>
 
       <!-- Change Password Dialog -->
       <v-dialog v-model="changePasswordDialog" max-width="500">
         <v-card>
-          <v-card-title class="text-center" style="background-color:#385cad;color:white">Change Password</v-card-title>
+          <v-card-title class="text-center" style="background-color:#02338D;color:white">Change Password</v-card-title>
           <v-card-text>
             <!-- Form fields for changing password -->
             <v-text-field v-model="oldPassword" label="Old Password" type="password" variant="outlined"></v-text-field>
@@ -30,7 +30,7 @@
             <v-text-field v-model="confirmPassword" label="Confirm New Password" type="password" variant="outlined"></v-text-field>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="white" @click="changePassword" style="background: green;margin-left: 20px;text-transform: capitalize;">Submit</v-btn>
+            <v-btn color="white" @click="changePassword" style="background:#02338D;margin-left: 20px;text-transform: capitalize;">Submit</v-btn>
             <v-btn color="white" @click="closeChangePasswordDialog" style="background:red;margin-left: 20px;text-transform: capitalize;">Cancel</v-btn>
           </v-card-actions>
         </v-card>

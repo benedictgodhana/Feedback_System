@@ -1,6 +1,6 @@
 <template>
   <v-card style="margin: 8px;border-radius: 10px;" variant="outlined" elevation="3" width="300">
-    <v-img src="/review_8867013.png" style="margin-top: 10px;" height="50" contain></v-img>
+    <v-img src="/Images/review_8867013.png" style="margin-top: 10px;" height="50" contain></v-img>
     <v-card-title style="font-size: 14px;">Number of Feedback Categories</v-card-title>
     <v-card-text>{{ feedbackCategoriesCount }}</v-card-text>
     <v-card-actions>

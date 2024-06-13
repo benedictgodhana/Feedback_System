@@ -1,38 +1,71 @@
 <template>
-  <v-app-bar app height="100" style="background:#385cad; color: white;" elevation="0">
-    <!-- Logo -->
+  <v-navigation-drawer app temporary v-model="drawer">
+    <v-card color="transparent" flat>
+      <v-card-text>
+        <v-progress-linear indeterminate color="primary"></v-progress-linear>
+      </v-card-text>
+    </v-card>
+  </v-navigation-drawer>
+  
+  <v-app-bar height="100" style="background:#02338D; color: white;" elevation="0">
+    <!-- Application title -->
     <v-header>
-     <a href="/admin"><img src="/iLab white Logo-01.png" alt="Logo" height="230" style="margin-top: 30px;margin-left: 20px;"></a> 
+      <a href="/admin" class="hidden-sm-and-down">
+        <img src="/Images/iLab white Logo-01.png" alt="Logo" height="230" style="margin-top: 30px;margin-left: 20px;">
+      </a> 
     </v-header>
+    
+    <v-app-bar-title class="hidden-sm-and-down"></v-app-bar-title>
 
-   <v-spacer></v-spacer>
+    <v-spacer></v-spacer> <!-- This spacer pushes the content to the right -->
+    
+    <!-- Language switch button -->
+    
+    <!-- Social media icons at top right -->
+    
     <!-- Profile and logout buttons -->
-    <v-btn style="margin-left: auto; font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text to="/Admin_profile">
-      <v-icon size="20" color="success" style="padding:17px;">mdi-account-circle</v-icon> Profile
+    <v-btn icon style="font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text to="/Admin_profile" class="hidden-sm-and-down">
+      <v-icon size="28"  style="padding:17px;">mdi-account-outline</v-icon>
     </v-btn>
-    <v-btn style="margin-left: 10px; font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text @click="toggleNotifications" >
-      <v-icon size="20" color="orange" style="padding:17px;">mdi-bell</v-icon> Notifications <span v-if="notificationCount > 0">({{ notificationCount }})</span>
+   
+    <v-btn icon style="margin-left: 10px; font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text @click="toggleNotifications" >
+      <v-icon size="28"   style="padding:17px;">mdi-bell-outline</v-icon><span v-if="notificationCount > 0"  class="notification-count">{{ notificationCount }}</span>
     </v-btn>
 
-    <v-btn style="margin-left: 10px; font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text @click="logout">
-      <v-icon size="20" color="red" style="padding:17px;">mdi-logout</v-icon> Logout
+    <v-btn icon class="ma-4" style="margin-left: 10px; font-weight: 500; font-family: 'poppins'; text-transform:capitalize;" text @click="logout">
+      <v-icon size="28"  style="padding:17px;">mdi-logout</v-icon> 
     </v-btn>
+
+
+    <!-- Navigation menu for small screens -->
+    <v-btn icon @click.stop="drawer = !drawer" class="hidden-md-and-up">
+      <v-icon>mdi-menu</v-icon>
+    </v-btn>
+
+    <!-- Display navigation drawer for small screens -->
+    <v-navigation-drawer v-model="drawer" absolute right temporary>
+      <v-list>
+        <!-- Loop through the items and create a router link for each -->
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.route" 
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
   </v-app-bar>
-
-
-
-
   <v-dialog v-model="notificationsVisible" max-width="400">
-     
-      <!-- Notifications component -->
-      <notifications></notifications>
-    </v-dialog>
+     <!-- Notifications component -->
+     <notifications></notifications>
+   </v-dialog>
 </template>
 
 <script>
-import axiosInstance from '@/service/api'; // Import Axios instance
+import axiosInstance from '@/service/api';
 import Notifications from '@/components/Notifications.vue'; // Import Notifications component
-
 
 export default {
   components: {
@@ -42,10 +75,64 @@ export default {
     return {
       notificationsVisible: false, // Flag to control visibility of notifications dropdown
       notificationCount: 0, // Store the count of unread notifications
+      user: {
+        initials: '',
+        fullName: '',
+        gender: ''
+      },
+     
+      items: [
+        { title: 'Leadership', route: '/leadership' },
+        { title: 'Upcoming Events', route: '/events' },
+        { title: 'Projects', route: '/projects' },
+        { title: 'Library', route: '/library' },
+        { title: 'News', route: '/news' },
+        { title: 'Profile', route: '/Admin_profile' },
+        { title: 'Gallery', route: '/gallery' },
+      ],
+      loading: false, // Control the visibility of the loading spinner
+      drawer: false // Control the visibility of the navigation drawer
     };
   },
-  methods: {
+  computed: {
+    // Computed properties to extract user information
+    userInitials() {
+      return this.user.initials;
+    },
+    userFullName() {
+      return this.user.fullName;
+    },
+    userGender() {
+      return this.user.gender;
+    },
+    userEmail() {
+      return this.user.email;
+    },
+    
+  },
+  mounted() {
+    // Fetch user data from the '/Authuser' endpoint using Axios
+    axiosInstance.get('/Authuser', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}` // Pass the authentication token from local storage
+      }
+    })
+      .then(response => {
+        const userData = response.data;
+        if (userData.name) {
+          this.user.initials = (userData.name.charAt(0).toUpperCase()) + (userData.user_details && userData.user_details.last_name ? userData.user_details.last_name.charAt(0).toUpperCase() : '');
+          this.user.fullName = userData.name + ' ' + (userData.user_details && userData.user_details.last_name ? userData.user_details.last_name : '');
+          this.user.gender = userData.user_details ? userData.user_details.gender : '';
+          this.user.email = userData.email;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
 
+    this.fetchNotificationCount();
+  },
+  methods: {
     async markAsRead(notificationId) {
       try {
         await axiosInstance.post(`/notifications/${notificationId}/mark-as-read`);
@@ -56,9 +143,6 @@ export default {
         console.error('Error marking notification as read:', error);
       }
     },
-
-   
-
     async fetchNotificationCount() {
       try {
         const response = await axiosInstance.get('/notifications/count'); // Endpoint to fetch notification count
@@ -67,13 +151,11 @@ export default {
         console.error('Error fetching notification count:', error);
       }
     },
-
     toggleNotifications() {
-  this.notificationsVisible = !this.notificationsVisible;
-  // Fetch the notification count again after toggling the visibility of notifications
-  this.fetchNotificationCount();
-},
-
+      this.notificationsVisible = !this.notificationsVisible;
+      // Fetch the notification count again after toggling the visibility of notifications
+      this.fetchNotificationCount();
+    },
     navigateToProfile() {
     },
     async logout() {
@@ -97,12 +179,32 @@ export default {
       } catch (error) {
         console.error('Error logging out:', error);
       }
-    }
-  },
-
-  mounted() {
-    // Fetch the notification count when the component is mounted
-    this.fetchNotificationCount();
+    },
+    switchLanguage(lang) {
+      // Implement logic to switch language
+      console.log('Switching language to:', lang);
+    },
+   
   }
 };
 </script>
+
+<style scoped>
+.center-align {
+  justify-content: center;
+}
+.notification-count {
+  position: absolute;
+  top: 6px; /* Adjust the vertical position */
+  right: 10px; /* Adjust the horizontal position */
+  background-color: red;
+  color: white;
+  border-radius: 50%; /* Make it a circle */
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
