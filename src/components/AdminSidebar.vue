@@ -9,7 +9,7 @@
       <!-- Categories -->
       <v-list-group value="Categories">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Feedback Categories" prepend-icon="mdi-tag" color="white" active-class="active-button"></v-list-item>
+          <v-list-item v-bind="props" title="My Feedback" prepend-icon="mdi-tag" color="white" active-class="active-button"></v-list-item>
         </template>
         <v-list-item to="/admin/manage-feedback" prepend-icon="mdi-email" title="All Feedback" color="white" elevation="0" active-class="active-button"></v-list-item>
 

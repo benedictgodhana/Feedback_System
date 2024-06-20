@@ -5,7 +5,7 @@
       <div class="panel left-panel">
         <div class="content">
           <div class="logo">
-            <img src="/Images/iLab white Logo-01.png" alt="Logo" style="height: 560px; margin-left: -30px;width:100%">
+            <img src="/Images/iLab white Logo-01.png" alt="Logo" style="height: 600px; margin-left: -30px;width:100%;margin-top:0px">
 
 
           </div>
@@ -21,7 +21,7 @@
       <div class="panel right-panel">
 
         <v-container>
-          <v-card-title class="text-start" style="font-size:28px">Welcome to @iLabAfrica Feedback System</v-card-title>
+          <v-card-title class="text-start" style="font-size:28px">Welcome to @iLabAfrica Feedback</v-card-title>
           <v-card-subtitle class="text-start ">Please provide your valuable feedback to help us improve our services.</v-card-subtitle>
         </v-container>
         
@@ -32,16 +32,14 @@
               
     <v-col cols="12" md="6">
       <v-card class="pa-4" outlined style="border-radius: 10px;" elevation="4">
-        <v-icon size="48" >mdi-lightbulb-outline</v-icon>                                                                                                                                                                                                                                                                                                                                                                   
+        <v-icon size="28" >mdi-lightbulb-outline</v-icon>                                                                                                                                                                                                                                                                                                                                                                   
         <v-card-title class="text-overline">Ideas</v-card-title>
         <v-divider></v-divider>
 
 <v-list-item
-  append-icon="mdi-chevron-right"
   lines="two"
   style="background-color:#02338D;color:white;text-transform: capitalize;"
   link
-  to="/feedback"
 >
 Share your great ideas with us                                                                                                                                                                                                                                          
 </v-list-item>
@@ -49,16 +47,14 @@ Share your great ideas with us
     </v-col>
     <v-col cols="12" md="6">
       <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
-        <v-icon size="48" >mdi-comment-check-outline</v-icon>
+        <v-icon size="28" >mdi-comment-check-outline</v-icon>
         <v-card-title class="text-overline">Feedback</v-card-title>
         <v-divider></v-divider>
 
 <v-list-item
-  append-icon="mdi-chevron-right"
   lines="two"
   style="background-color:#02338D;color:white;text-transform: capitalize;"
   link
-  to="/feedback"
 >
 Provide feedback on your Experiences
 </v-list-item>
@@ -66,16 +62,14 @@ Provide feedback on your Experiences
     </v-col>
     <v-col cols="12" md="6" >
       <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
-        <v-icon size="48" >mdi-alert-circle-outline</v-icon>
+        <v-icon size="28" >mdi-alert-circle-outline</v-icon>
         <v-card-title class="text-overline">Issues</v-card-title>
         <v-divider></v-divider>
 
 <v-list-item
-  append-icon="mdi-chevron-right"
   lines="two"
   style="background-color:#02338D;color:white;text-transform: capitalize;"
   link
-  to="/feedback"  
 >
 Report any issues you encounter.
 </v-list-item>
@@ -83,16 +77,14 @@ Report any issues you encounter.
     </v-col>
     <v-col cols="12" md="6" >
       <v-card class="pa-4" outlined  style="border-radius:10px;" elevation="4">
-        <v-icon size="48" >mdi-help-circle-outline</v-icon>
+        <v-icon size="28" >mdi-help-circle-outline</v-icon>
         <v-card-title class="text-overline">Suggestions</v-card-title>
         <v-divider></v-divider>
 
 <v-list-item
-  append-icon="mdi-chevron-right"
   lines="two"
   style="background-color:#02338D;color:white;text-transform: capitalize;"
   link
-  to="/feedback"
 >
 Share with us your valuable suggestions
 </v-list-item>

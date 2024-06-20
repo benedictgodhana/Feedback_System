@@ -54,6 +54,7 @@
             <v-text-field
               v-model="subject"
               label="Subject*"
+              style="text-transform: capitalize;"
               required
               :rules="[v => !!v || 'Subject is required']"
               variant="underlined"
@@ -83,6 +84,7 @@
             <v-textarea
               v-model="feedback"
               label="Feedback*"
+              style="text-transform: capitalize;"
               required
               :rules="[v => !!v || 'Feedback is required']"
               variant="underlined"
@@ -90,7 +92,6 @@
               dense
             ></v-textarea>
 
-            <div id="recaptchaContainer"></div>
 
             <v-btn
               type="submit"
@@ -104,7 +105,7 @@
               Submit
             </v-btn>
 
-            <p class="text-center mt-2" style="font-size: 12px;">
+            <p class="text-center mt-2" style="font-size: 12px;text-transform: capitalize;">
               Your feedback will be treated with utmost urgency
             </p>
           </v-form>
@@ -112,10 +113,7 @@
       </v-card>
     </v-container>
 
-    <v-snackbar v-model="errorSnackbar" color="error" top>
-      Please fill in all required fields.
-      <v-btn text @click="errorSnackbar = false" icon color="transparent" elevation="0"><v-icon>mdi-close</v-icon></v-btn>
-    </v-snackbar>
+    
 
     <v-footer style="background-color:#02338D;">
       <v-container>
@@ -307,8 +305,10 @@ export default {
         this.feedback = '';
         this.otherCategory = '';
 
+
+
         setTimeout(() => {
-          this.successMessage = '';
+          this.successMessage = true;
         }, 4000);
       } catch (error) {
         console.error('Error submitting feedback:', error);
