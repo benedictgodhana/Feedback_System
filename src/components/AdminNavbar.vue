@@ -58,6 +58,7 @@
 
   </v-app-bar>
   <v-dialog v-model="notificationsVisible" max-width="400">
+    
      <!-- Notifications component -->
      <notifications></notifications>
    </v-dialog>
@@ -81,15 +82,6 @@ export default {
         gender: ''
       },
      
-      items: [
-        { title: 'Leadership', route: '/leadership' },
-        { title: 'Upcoming Events', route: '/events' },
-        { title: 'Projects', route: '/projects' },
-        { title: 'Library', route: '/library' },
-        { title: 'News', route: '/news' },
-        { title: 'Profile', route: '/Admin_profile' },
-        { title: 'Gallery', route: '/gallery' },
-      ],
       loading: false, // Control the visibility of the loading spinner
       drawer: false // Control the visibility of the navigation drawer
     };

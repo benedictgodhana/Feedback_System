@@ -208,6 +208,7 @@ export default {
   { title: 'Email', value: 'email' },
   { title: 'Feedback', value: 'feedback' },
   { title: 'Status', value: 'status' },
+  { title: 'Date Created', value: 'created_at' },
   { title: 'Action', value: 'action' },
 ],
 
@@ -247,51 +248,53 @@ export default {
     return Math.ceil(this.filteredFeedbacks.length / this.itemsPerPage);
   },
 
-    formattedFeedbacks() {
-      return this.feedbacks.map(feedback => {
-        feedback.created_at = this.formatTime(feedback.created_at);
-        return feedback;
+  formattedFeedbacks() {
+    return this.feedbacks.map(feedback => ({
+      ...feedback,
+      created_at: this.formatDate(feedback.created_at), // Format the date
+    }));
+  },
+
+  
+  
+  filteredFeedbacks() {
+    let filteredFeedbacks = this.formattedFeedbacks; // Use formattedFeedbacks here
+
+    // Existing filtering logic...
+    if (this.search) {
+      filteredFeedbacks = filteredFeedbacks.filter(feedback => {
+        return Object.values(feedback).some(value =>
+          typeof value === 'string' && value.toLowerCase().includes(this.search.toLowerCase())
+        );
       });
-    },
-    filteredFeedbacks() {
-  let filteredFeedbacks = this.feedbacks;
+    }
 
-  if (this.search) {
-    filteredFeedbacks = filteredFeedbacks.filter(feedback => {
-      return Object.values(feedback).some(value =>
-        typeof value === 'string' && value.toLowerCase().includes(this.search.toLowerCase())
-      );
-    });
-  }
+    if (this.selectedCategory) {
+      filteredFeedbacks = filteredFeedbacks.filter(feedback => feedback.category_id === this.selectedCategory);
+    }
 
+    if (this.selectedSubcategory) {
+      filteredFeedbacks = filteredFeedbacks.filter(feedback => feedback.subcategory_id === this.selectedSubcategory);
+    }
 
-  if (this.selectedCategory) {
-    filteredFeedbacks = filteredFeedbacks.filter(feedback => feedback.category_id === this.selectedCategory);
-  }
+    if (this.startDate) {
+      const startDate = new Date(this.startDate);
+      filteredFeedbacks = filteredFeedbacks.filter(feedback => {
+        const feedbackDate = new Date(feedback.created_at);
+        return feedbackDate >= startDate;
+      });
+    }
 
-  if (this.selectedSubcategory) {
-    filteredFeedbacks = filteredFeedbacks.filter(feedback => feedback.subcategory_id === this.selectedSubcategory);
-  }
+    if (this.endDate) {
+      const endDate = new Date(this.endDate);
+      filteredFeedbacks = filteredFeedbacks.filter(feedback => {
+        const feedbackDate = new Date(feedback.created_at);
+        return feedbackDate <= endDate;
+      });
+    }
 
-  if (this.startDate) {
-    const startDate = new Date(this.startDate);
-    filteredFeedbacks = filteredFeedbacks.filter(feedback => {
-      const feedbackDate = new Date(feedback.created_at);
-      return feedbackDate >= startDate;
-    });
-  }
-
-  if (this.endDate) {
-    const endDate = new Date(this.endDate);
-    filteredFeedbacks = filteredFeedbacks.filter(feedback => {
-      const feedbackDate = new Date(feedback.created_at);
-      return feedbackDate <= endDate;
-    });
-  }
-
-  return filteredFeedbacks;
-},
-
+    return filteredFeedbacks;
+  },
   },
  
   watch: {
@@ -308,7 +311,24 @@ export default {
 
 
   methods: {
+    formatDate(timestamp) {
+  const date = new Date(timestamp);
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  
+  const day = date.getDate();
+  const suffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
 
+  const formattedDate = date.toLocaleDateString('en-US', options);
+  return `${formattedDate.replace(/(\d+)/, `$&${suffix(day)}`)}`; // Add suffix to day
+},
 
     resetFilters() {
     // Reset all filter variables to their initial state
@@ -350,15 +370,7 @@ export default {
       this.currentPage = page;
     },
 
-    formatTime(timestamp) {
-      const date = new Date(timestamp);
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      const formattedHours = hours % 12 || 12;
-      const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-      return `${formattedHours}:${formattedMinutes} ${ampm}`;
-    },
+    
 
     async updateFeedbackStatus() {
       if (!this.selectedFeedback || !this.selectedFeedback.id) {
@@ -469,7 +481,7 @@ async fetchCategories() {
     console.error('Error fetching feedback categories:', error);
   }
 },
-async fetchSubcategories() {
+async fetchSubcategories() {  
   try {
     if (!this.selectedCategory) {
       console.error('Selected category is empty');
@@ -513,21 +525,29 @@ async fetchFilteredFeedback() {
   }
 },
 
-
-
-
-
 async fetchFeedbacks() {
   try {
-    const response = await axiosInstance.get('/feedbacks');
+    // Construct the URL based on the selected subcategory
+    let url = '/feedbacks';
+    if (this.filterSubCategory) {
+      url += `?subcategory_id=${this.filterSubCategory}`;
+    }
+
+    const response = await axiosInstance.get(url);
     if (Array.isArray(response.data)) {
-      // Update feedbacks data property with the fetched data
-      this.feedbacks = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      // Format and sort feedbacks by created_at date, newest first
+      this.feedbacks = response.data
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort by original timestamp
+        .map(feedback => ({
+          ...feedback,
+          created_at: this.formatDate(feedback.created_at), // Format the date
+        }));
     } else {
       console.error('Error: Response data is not an array for feedbacks');
     }
   } catch (error) {
     console.error('Error fetching feedbacks:', error);
+    this.alert = { show: true, type: 'error', message: 'Failed to fetch feedbacks.' }; // Show error alert
   }
 },
 

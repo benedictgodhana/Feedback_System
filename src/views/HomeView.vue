@@ -5,7 +5,7 @@
       <div class="panel left-panel">
         <div class="content">
           <div class="logo">
-            <img src="/Images/iLab white Logo-01.png" alt="Logo" style="height: 600px; margin-left: -30px;width:100%;margin-top:0px">
+            <img src="/Images/iLab white Logo-01.png" alt="Logo" style="height: 500px; margin-left: -30px;width:100%;margin-top:0px">
 
 
           </div>

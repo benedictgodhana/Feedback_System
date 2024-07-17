@@ -76,7 +76,7 @@
         <v-text-field v-model="signInData.email" label="Email" hint="For example, username@example.com" required :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']" prepend-inner-icon="mdi-email" variant="outlined"></v-text-field>
         <v-text-field v-model="signInData.password" label="Password" type="password" required :rules="[v => !!v || 'Password is required']" prepend-inner-icon="mdi-lock" variant="outlined"></v-text-field>
         <!-- Login button with loading state -->
-        <v-btn :loading="loading" type="submit" style="border-radius: 2px; width: 100%; text-transform: lowercase; background:#02338D; color: white;">
+        <v-btn :loading="loading" type="submit" style="border-radius: 2px; width: 100%; text-transform:capitalize; background:#02338D; color: white;">
           <v-icon left style="margin: 3px">mdi-login</v-icon>
           Login
         </v-btn>

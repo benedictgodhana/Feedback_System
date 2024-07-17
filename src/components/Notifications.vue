@@ -1,16 +1,34 @@
 <template>
-  <v-card class="notifications-card">
-    <v-toolbar>
-      <v-card-title style="margin-left: 100px;">Notifications</v-card-title>
+  <v-card class="notifications-card" width="600">
+    <v-toolbar style="background-color: #385cad;">
+      <v-card-title style="margin-left: 100px;color:white">Notifications</v-card-title>
     </v-toolbar>
     <!-- Notification list -->
     <v-list style="max-height: 300px; overflow-y: auto;">
-      <v-list-item v-for="notification in notifications" :key="notification.id" prepend-icon="mdi-email"  class="notification-item" @click="navigateToFeedback(notification.feedback_id)">
-        <v-list-item-title style="font-weight:500;">{{ notification.feedback.subject }}</v-list-item-title>
-        <v-list-item-subtitle>{{ notification.feedback.feedback }}</v-list-item-subtitle>
-        <v-list-item-subtitle>{{ formatTime(notification.created_at) }}</v-list-item-subtitle> 
-        <v-chip v-if="!notification.read" @click="markAsRead(notification.id, notification.feedback_id)" style="text-transform: capitalize;color:green;" elevation="0">Mark as Read</v-chip>
-        <span v-else style="color:#385cad">Read</span>
+      <v-list-item 
+        v-for="notification in notifications" 
+        :key="notification.id" 
+        :class="{'new-notification': !notification.read, 'read-notification': notification.read}"
+        class="notification-item" 
+        @click="navigateToFeedback(notification.feedback_id)"
+      >
+        <v-list-item-content>
+          <v-list-item-title style="font-weight:500;">{{ notification.feedback.subject }}</v-list-item-title>
+          <v-list-item-subtitle>{{ notification.feedback.feedback }}</v-list-item-subtitle> 
+
+          <v-list-item-subtitle>{{ formatTime(notification.feedback.created_at) }}</v-list-item-subtitle> 
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-chip 
+            v-if="!notification.read" 
+            @click.stop="markAsRead(notification.id, notification.feedback_id)" 
+            style="text-transform: capitalize; color: green;" 
+            elevation="0"
+          >
+            Mark as Read
+          </v-chip>
+          <span v-else style="color:#385cad">Read</span>
+        </v-list-item-action>
       </v-list-item>
     </v-list>
   </v-card>
@@ -18,6 +36,7 @@
 
 <script>
 import axiosInstance from '@/service/api';
+
 export default {
   data() {
     return {
@@ -82,3 +101,34 @@ export default {
   }
 };
 </script>
+
+<style>
+.notifications-card {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-item .v-list-item-content {
+  flex: 1;
+}
+
+.notification-item .v-list-item-action {
+  flex-shrink: 0;
+}
+
+.new-notification {
+  background-color: #e0f7fa; /* Light cyan background for new notifications */
+  font-weight: bold; /* Make unopened notifications thicker */
+}
+
+.read-notification {
+  opacity: 0.6; /* Make opened notifications faded */
+}
+</style>

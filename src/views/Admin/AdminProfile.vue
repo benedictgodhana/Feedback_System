@@ -7,38 +7,68 @@
       <v-card variant="outlined">
         <v-card-title class="text-center" style="background-color:#02338D;color:white;text-transform: capitalize;">Profile</v-card-title>
 
+        <v-alert v-if="snackbar.show" :type="snackbar.color" dismissible @click="snackbar.show = false">
+          {{ snackbar.message }}
+        </v-alert>
+
         <v-card-text style="margin-top: 20px;">
-          <v-text-field v-model="user.name" label="Username" outlined variant="outlined"></v-text-field>
-          <v-text-field v-model="user.email" label="Email" outlined variant="outlined"></v-text-field>
-          <input type="hidden" v-model="user.role" /> <!-- Hidden role field -->
-          <!-- Add more profile fields as needed -->
+          <v-text-field 
+            v-model="user.name" 
+            label="Username" 
+            outlined 
+            variant="outlined"
+            :error-messages="errors.name"
+          ></v-text-field>
+          <v-text-field 
+            v-model="user.email" 
+            label="Email" 
+            outlined 
+            variant="outlined"
+            :error-messages="errors.email"
+          ></v-text-field>
+          <input type="hidden" v-model="user.role" />
+          
+          <!-- Form fields for changing password -->
+          <v-text-field 
+            v-model="oldPassword" 
+            label="Old Password" 
+            type="password" 
+            variant="outlined" 
+            autocomplete="off"
+            :error-messages="errors.oldPassword"
+          ></v-text-field>
+          <v-text-field 
+            v-model="newPassword" 
+            label="New Password" 
+            type="password" 
+            variant="outlined" 
+            autocomplete="off"
+            :error-messages="errors.newPassword"
+          ></v-text-field>
+          <v-text-field 
+            v-model="confirmPassword" 
+            label="Confirm New Password" 
+            type="password" 
+            variant="outlined" 
+            autocomplete="off"
+            :error-messages="errors.confirmPassword"
+          ></v-text-field>
         </v-card-text>
+
         <v-card-actions>
-          <v-btn color="white" @click="updateUserProfile" style="background:#02338D;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Update Profile</v-btn>
-          <v-btn color="white" @click="openChangePasswordDialog" style="background:#02338D;margin-left: 20px;text-transform: capitalize;"><v-icon>mdi-lock</v-icon>Change Password</v-btn>
+          <v-btn 
+            color="white" 
+            @click="updateUserProfile" 
+            style="background:#02338D;margin-left: 20px;text-transform: capitalize;"
+            width="100%"
+          >
+            <v-icon>mdi-lock</v-icon>Update Profile
+          </v-btn>
         </v-card-actions>
       </v-card>
-
-      <!-- Change Password Dialog -->
-      <v-dialog v-model="changePasswordDialog" max-width="500">
-        <v-card>
-          <v-card-title class="text-center" style="background-color:#02338D;color:white">Change Password</v-card-title>
-          <v-card-text>
-            <!-- Form fields for changing password -->
-            <v-text-field v-model="oldPassword" label="Old Password" type="password" variant="outlined"></v-text-field>
-            <v-text-field v-model="newPassword" label="New Password" type="password" variant="outlined"></v-text-field>
-            <v-text-field v-model="confirmPassword" label="Confirm New Password" type="password" variant="outlined"></v-text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="white" @click="changePassword" style="background:#02338D;margin-left: 20px;text-transform: capitalize;">Submit</v-btn>
-            <v-btn color="white" @click="closeChangePasswordDialog" style="background:red;margin-left: 20px;text-transform: capitalize;">Cancel</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-container>
   </div>
 </template>
-
 <script>
 import axiosInstance from '@/service/api';
 import AdminSidebar from '@/components/AdminSidebar.vue';
@@ -51,11 +81,27 @@ export default {
   },
   data() {
     return {
-      user: {},
-      changePasswordDialog: false,
+      user: {
+        name: '',
+        email: '',
+        role: '',
+      },
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
+      snackbar: {
+        show: false,
+        message: '',
+        color: ''
+      },
+      errors: {
+        name: [],
+        email: [],
+        role: [],
+        oldPassword: [],
+        newPassword: [],
+        confirmPassword: []
+      }
     };
   },
   created() {
@@ -83,56 +129,51 @@ export default {
       }
     },
     async updateUserProfile() {
+      this.clearErrors();
       try {
         const authToken = localStorage.getItem('token');
-        await axiosInstance.put('/users/update-profile', this.user, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        // Optionally, you can update the user data in local storage after successful update
-        localStorage.setItem('user', JSON.stringify(this.user));
-        console.log('User profile updated successfully');
-      } catch (error) {
-        console.error('Error updating user profile:', error);
-      }
-    },
-    openChangePasswordDialog() {
-      this.changePasswordDialog = true;
-    },
-    closeChangePasswordDialog() {
-      this.changePasswordDialog = false;
-    },
-    async changePassword() {
-      try {
-        // Validate the new password and confirm password
-        if (this.newPassword !== this.confirmPassword) {
-          // Display an error message or toast indicating password mismatch
-          console.error('Password confirmation does not match');
-          return;
-        }
 
-        const authToken = localStorage.getItem('token');
+        // Combine profile data and password change data if available
         const requestData = {
-          old_password: this.oldPassword,
-          new_password: this.newPassword,
-          confirm_password: this.confirmPassword
+          name: this.user.name || undefined,
+          email: this.user.email || undefined,
+          role: this.user.role || undefined,
+          old_password: this.oldPassword || undefined,
+          new_password: this.newPassword || undefined,
+          confirm_password: this.confirmPassword || undefined,
         };
 
-        // Send a PUT request to the backend API to change the password
-        await axiosInstance.put('/users/change-password', requestData, {
+        await axiosInstance.put('/users/update-profile', requestData, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         });
 
-        // Optionally, display a success message or toast
-        console.log('Password changed successfully');
+        // Optionally, update the user data in local storage after successful update
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.showSnackbar('User profile updated successfully', 'success');
       } catch (error) {
-        console.error('Error changing password:', error);
-        // Optionally, display an error message or toast
+        if (error.response && error.response.data.errors) {
+          this.errors = error.response.data.errors;
+        }
+        this.showSnackbar('Error updating user profile', 'error');
       }
     },
+    showSnackbar(message, color) {
+      this.snackbar.message = message;
+      this.snackbar.color = color;
+      this.snackbar.show = true;
+    },
+    clearErrors() {
+      this.errors = {
+        name: [],
+        email: [],
+        role: [],
+        oldPassword: [],
+        newPassword: [],
+        confirmPassword: []
+      };
+    }
   },
 };
 </script>
